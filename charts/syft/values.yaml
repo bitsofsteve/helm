@@ -1,0 +1,7 @@
+# Values for the syft chart will be passed through to the dependency
+syft:
+  # Default configuration values that will be applied to the dependency chart
+  global:
+    registry: docker.io
+    version: 0.9.6-beta.4
+  # Add other default values as needed

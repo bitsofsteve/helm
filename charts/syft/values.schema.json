@@ -1,0 +1,722 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+      "global": {
+        "description": "Global configuration for Syft",
+        "type": "object",
+        "properties": {
+          "registry": {
+            "description": "Container registry to use for backend, frontend, and seaweedfs containers",
+            "type": "string",
+            "default": "docker.io"
+          },
+          "version": {
+            "description": "Version of Syft components",
+            "type": "string",
+            "default": "0.9.6-beta.4"
+          },
+          "randomizedSecrets": {
+            "description": "Force default secret values for development. DO NOT SET THIS TO FALSE IN PRODUCTION",
+            "type": "boolean",
+            "default": true
+          },
+          "kaniko": {
+            "description": "Kaniko configuration",
+            "type": "object",
+            "properties": {
+              "version": {
+                "description": "Kaniko version",
+                "type": "string",
+                "default": "v1.23.2"
+              }
+            }
+          },
+          "workerVersion": {
+            "description": "Version of worker components",
+            "type": "string",
+            "default": "0.9.6-beta.4"
+          }
+        }
+      },
+      "postgres": {
+        "description": "PostgreSQL database configuration",
+        "type": "object",
+        "properties": {
+          "port": {
+            "description": "PostgreSQL port",
+            "type": "integer",
+            "default": 5432
+          },
+          "username": {
+            "description": "PostgreSQL username",
+            "type": "string",
+            "default": "syft_postgres"
+          },
+          "dbname": {
+            "description": "PostgreSQL database name",
+            "type": "string",
+            "default": "syftdb_postgres"
+          },
+          "host": {
+            "description": "PostgreSQL host",
+            "type": "string",
+            "default": "postgres"
+          },
+          "env": {
+            "description": "Extra environment variables for PostgreSQL",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "podLabels": {
+            "description": "Pod labels for PostgreSQL",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "podAnnotations": {
+            "description": "Pod annotations for PostgreSQL",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "nodeSelector": {
+            "description": "Node selector for PostgreSQL pods",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "resourcesPreset": {
+            "description": "Resource preset for PostgreSQL",
+            "type": "string",
+            "enum": ["nano", "small", "medium", "large", "xlarge"],
+            "default": "large"
+          },
+          "resources": {
+            "description": "Custom resource configuration for PostgreSQL",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "storageSize": {
+            "description": "PVC storage size for PostgreSQL",
+            "type": "string",
+            "default": "5Gi"
+          },
+          "secretKeyName": {
+            "description": "Postgres secret name. Override this if you want to use a self-managed secret.",
+            "type": "string",
+            "default": "postgres-secret"
+          },
+          "secret": {
+            "description": "Default/custom secret raw values",
+            "type": "object",
+            "properties": {
+              "rootPassword": {
+                "description": "Root password for PostgreSQL",
+                "type": ["string", "null"],
+                "default": null,
+                "x-form": {
+                  "value": "{{project.password}}"
+                },
+                "x-onyxia": {
+                  "overwriteDefaultWith": "{{project.password}}"
+                }
+              }
+            }
+          }
+        }
+      },
+      "frontend": {
+        "description": "Frontend configuration",
+        "type": "object",
+        "properties": {
+          "env": {
+            "description": "Extra environment variables for frontend",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "resourcesPreset": {
+            "description": "Resource preset for frontend",
+            "type": "string",
+            "enum": ["nano", "small", "medium", "large", "xlarge"],
+            "default": "medium"
+          },
+          "resources": {
+            "description": "Custom resource configuration for frontend",
+            "type": ["object", "null"],
+            "default": null
+          }
+        }
+      },
+      "seaweedfs": {
+        "description": "SeaweedFS configuration",
+        "type": "object",
+        "properties": {
+          "master": {
+            "description": "SeaweedFS master configuration",
+            "type": "object",
+            "properties": {
+              "volumeSizeMB": {
+                "description": "Seaweed Volume Size in MB set on master. This is not PVC.",
+                "type": "integer",
+                "default": 1000
+              },
+              "config": {
+                "description": "master.toml configuration",
+                "type": ["object", "null"],
+                "default": null
+              }
+            }
+          },
+          "filer": {
+            "description": "SeaweedFS filer configuration",
+            "type": "object",
+            "properties": {
+              "config": {
+                "description": "filer.toml configuration",
+                "type": ["object", "null"],
+                "default": null
+              }
+            }
+          },
+          "s3": {
+            "description": "SeaweedFS S3 configuration",
+            "type": "object",
+            "properties": {
+              "rootUser": {
+                "description": "S3 root user",
+                "type": "string",
+                "default": "admin"
+              }
+            }
+          },
+          "minSizeBlobStorageMB": {
+            "description": "Minimum size of blob storage in MB",
+            "type": "integer",
+            "default": 16
+          },
+          "mountApi": {
+            "description": "Mount API configuration",
+            "type": "object",
+            "properties": {
+              "automount": {
+                "description": "Automount configuration",
+                "type": ["array", "null"],
+                "default": null
+              },
+              "secretKeyName": {
+                "description": "Secret key name for mount API",
+                "type": ["string", "null"],
+                "default": null
+              }
+            }
+          },
+          "env": {
+            "description": "Extra environment variables for SeaweedFS",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "storageSize": {
+            "description": "PVC storage size for SeaweedFS",
+            "type": "string",
+            "default": "100Gi"
+          },
+          "secretKeyName": {
+            "description": "Seaweed secret name. Override this if you want to use a self-managed secret.",
+            "type": "string",
+            "default": "seaweedfs-secret"
+          },
+          "podLabels": {
+            "description": "Pod labels for SeaweedFS",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "podAnnotations": {
+            "description": "Pod annotations for SeaweedFS",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "nodeSelector": {
+            "description": "Node selector for SeaweedFS pods",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "resourcesPreset": {
+            "description": "Resource preset for SeaweedFS",
+            "type": "string",
+            "enum": ["nano", "small", "medium", "large", "xlarge"],
+            "default": "xlarge"
+          },
+          "resources": {
+            "description": "Custom resource configuration for SeaweedFS",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "volumes": {
+            "description": "Extra volumes for SeaweedFS",
+            "type": ["array", "null"],
+            "default": null
+          },
+          "volumeMounts": {
+            "description": "Extra volume mounts for SeaweedFS",
+            "type": ["array", "null"],
+            "default": null
+          },
+          "secret": {
+            "description": "Default/custom secret raw values",
+            "type": "object",
+            "properties": {
+              "s3RootPassword": {
+                "description": "S3 root password",
+                "type": ["string", "null"],
+                "default": null,
+                "x-form": {
+                  "value": "{{project.password}}"
+                },
+                "x-onyxia": {
+                  "overwriteDefaultWith": "{{project.password}}"
+                }
+              }
+            }
+          }
+        }
+      },
+      "proxy": {
+        "description": "Proxy configuration",
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "description": "Enable proxy",
+            "type": "boolean",
+            "default": true
+          },
+          "env": {
+            "description": "Extra environment variables for proxy",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "podLabels": {
+            "description": "Pod labels for proxy",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "podAnnotations": {
+            "description": "Pod annotations for proxy",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "serviceAnnotations": {
+            "description": "Service annotations for proxy",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "nodeSelector": {
+            "description": "Node selector for proxy pods",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "resourcesPreset": {
+            "description": "Resource preset for proxy",
+            "type": "string",
+            "enum": ["nano", "small", "medium", "large", "xlarge"],
+            "default": "small"
+          },
+          "resources": {
+            "description": "Custom resource configuration for proxy",
+            "type": ["object", "null"],
+            "default": null
+          }
+        }
+      },
+      "registry": {
+        "description": "Registry configuration",
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "description": "Enable registry",
+            "type": "boolean",
+            "default": true
+          },
+          "env": {
+            "description": "Extra environment variables for registry",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "storageSize": {
+            "description": "PVC storage size for registry",
+            "type": "string",
+            "default": "50Gi"
+          },
+          "podLabels": {
+            "description": "Pod labels for registry",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "podAnnotations": {
+            "description": "Pod annotations for registry",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "nodeSelector": {
+            "description": "Node selector for registry pods",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "resourcesPreset": {
+            "description": "Resource preset for registry",
+            "type": "string",
+            "enum": ["nano", "small", "medium", "large", "xlarge"],
+            "default": "medium"
+          },
+          "resources": {
+            "description": "Custom resource configuration for registry",
+            "type": ["object", "null"],
+            "default": null
+          }
+        }
+      },
+      "server": {
+        "description": "Server configuration",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Server name",
+            "type": ["string", "null"],
+            "default": null
+          },
+          "rootEmail": {
+            "description": "Root email",
+            "type": "string",
+            "default": "info@openmined.org"
+          },
+          "type": {
+            "description": "Server type",
+            "type": "string",
+            "enum": ["datasite", "network"],
+            "default": "datasite"
+          },
+          "side": {
+            "description": "Server side",
+            "type": "string",
+            "enum": ["high", "low"],
+            "default": "high"
+          },
+          "defaultBucketName": {
+            "description": "Default bucket name",
+            "type": ["string", "null"],
+            "default": null
+          },
+          "inMemoryWorkers": {
+            "description": "Use in-memory workers",
+            "type": "boolean",
+            "default": false
+          },
+          "queuePort": {
+            "description": "Queue port",
+            "type": "integer",
+            "default": 5556
+          },
+          "logLevel": {
+            "description": "Log level",
+            "type": "string",
+            "enum": ["debug", "info", "warning", "error", "critical"],
+            "default": "info"
+          },
+          "debuggerEnabled": {
+            "description": "Enable debugger",
+            "type": "boolean",
+            "default": false
+          },
+          "associationRequestAutoApproval": {
+            "description": "Auto-approve association requests",
+            "type": "boolean",
+            "default": false
+          },
+          "useInternalRegistry": {
+            "description": "Use internal registry",
+            "type": "boolean",
+            "default": true
+          },
+          "tracing": {
+            "description": "Tracing configuration",
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "description": "Enable tracing",
+                "type": "boolean",
+                "default": false
+              },
+              "otlpEndpoint": {
+                "description": "OpenTelemetry Collector endpoint",
+                "type": "string",
+                "default": ""
+              },
+              "otlpProtocol": {
+                "description": "OpenTelemetry protocol",
+                "type": "string",
+                "enum": ["grpc", "http/protobuf"],
+                "default": "grpc"
+              }
+            }
+          },
+          "defaultWorkerPool": {
+            "description": "Default worker pool configuration",
+            "type": "object",
+            "properties": {
+              "count": {
+                "description": "Number of workers in the pool",
+                "type": "integer",
+                "default": 1
+              },
+              "podLabels": {
+                "description": "Pod labels for worker pool",
+                "type": ["object", "null"],
+                "default": null
+              },
+              "podAnnotations": {
+                "description": "Pod annotations for worker pool",
+                "type": ["object", "null"],
+                "default": null
+              }
+            }
+          },
+          "smtp": {
+            "description": "SMTP configuration",
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "description": "Enable SMTP",
+                "type": "boolean",
+                "default": false
+              },
+              "host": {
+                "description": "SMTP host",
+                "type": ["string", "null"],
+                "default": null
+              },
+              "port": {
+                "description": "SMTP port",
+                "type": ["integer", "null"],
+                "default": null
+              },
+              "from": {
+                "description": "SMTP from address",
+                "type": ["string", "null"],
+                "default": null
+              },
+              "username": {
+                "description": "SMTP username",
+                "type": ["string", "null"],
+                "default": null
+              },
+              "password": {
+                "description": "SMTP password",
+                "type": ["string", "null"],
+                "default": null
+              },
+              "existingSecret": {
+                "description": "Existing secret for SMTP with key 'smtpPassword'",
+                "type": ["string", "null"],
+                "default": null
+              }
+            }
+          },
+          "env": {
+            "description": "Extra environment variables for server",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "podLabels": {
+            "description": "Pod labels for server",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "podAnnotations": {
+            "description": "Pod annotations for server",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "nodeSelector": {
+            "description": "Node selector for server pods",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "resourcesPreset": {
+            "description": "Resource preset for server",
+            "type": "string",
+            "enum": ["nano", "small", "medium", "large", "xlarge"],
+            "default": "xlarge"
+          },
+          "resources": {
+            "description": "Custom resource configuration for server",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "secretKeyName": {
+            "description": "Backend secret name. Override this if you want to use a self-managed secret.",
+            "type": "string",
+            "default": "backend-secret"
+          },
+          "secret": {
+            "description": "Default/custom secret raw values",
+            "type": "object",
+            "properties": {
+              "defaultRootPassword": {
+                "description": "Default root password",
+                "type": ["string", "null"],
+                "default": null,
+                "x-form": {
+                  "value": "{{project.password}}"
+                },
+                "x-onyxia": {
+                  "overwriteDefaultWith": "{{project.password}}"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ingress": {
+        "description": "Ingress configuration",
+        "type": "object",
+        "properties": {
+          "hostname": {
+            "description": "Ingress hostname (do not make this localhost)",
+            "type": ["string", "null"],
+            "default": null
+          },
+          "annotations": {
+            "description": "Ingress annotations",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "tls": {
+            "description": "TLS configuration",
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "description": "Enable TLS",
+                "type": "boolean",
+                "default": false
+              },
+              "secretName": {
+                "description": "TLS secret name",
+                "type": ["string", "null"],
+                "default": null
+              }
+            }
+          },
+          "class": {
+            "description": "Ingress class",
+            "type": ["string", "null"],
+            "default": null
+          },
+          "className": {
+            "description": "Ingress class name",
+            "type": ["string", "null"],
+            "default": null
+          }
+        }
+      },
+      "rtunnel": {
+        "description": "Remote tunnel configuration",
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "description": "Enable remote tunnel",
+            "type": "boolean",
+            "default": false
+          },
+          "logLevel": {
+            "description": "Log level",
+            "type": "string",
+            "enum": ["debug", "info", "warning", "error", "critical"],
+            "default": "info"
+          },
+          "port": {
+            "description": "Tunnel port",
+            "type": "integer",
+            "default": 2333
+          },
+          "mode": {
+            "description": "Tunnel mode",
+            "type": "string",
+            "enum": ["client", "server"],
+            "default": "client"
+          },
+          "env": {
+            "description": "Extra environment variables for rtunnel",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "podLabels": {
+            "description": "Pod labels for rtunnel",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "podAnnotations": {
+            "description": "Pod annotations for rtunnel",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "nodeSelector": {
+            "description": "Node selector for rtunnel pods",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "resourcesPreset": {
+            "description": "Resource preset for rtunnel",
+            "type": "string",
+            "enum": ["nano", "small", "medium", "large", "xlarge"],
+            "default": "small"
+          },
+          "resources": {
+            "description": "Custom resource configuration for rtunnel",
+            "type": ["object", "null"],
+            "default": null
+          }
+        }
+      },
+      "attestation": {
+        "description": "Enclave attestation service configuration",
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "description": "Enable attestation service",
+            "type": "boolean",
+            "default": false
+          },
+          "appLogLevel": {
+            "description": "Application log level",
+            "type": "string",
+            "enum": ["debug", "info", "warning", "error", "critical"],
+            "default": "info"
+          },
+          "uvicornLogLevel": {
+            "description": "Uvicorn log level",
+            "type": "string",
+            "enum": ["debug", "info", "warning", "error", "critical"],
+            "default": "info"
+          },
+          "env": {
+            "description": "Extra environment variables for attestation service",
+            "type": ["object", "null"],
+            "default": null
+          },
+          "resourcesPreset": {
+            "description": "Resource preset for attestation service",
+            "type": "string",
+            "enum": ["nano", "small", "medium", "large", "xlarge"],
+            "default": "nano"
+          },
+          "resources": {
+            "description": "Custom resource configuration for attestation service",
+            "type": ["object", "null"],
+            "default": null
+          }
+        }
+      },
+      "extraResources": {
+        "description": "Extra Kubernetes resources to create",
+        "type": "array",
+        "default": []
+      }
+    }
+  }

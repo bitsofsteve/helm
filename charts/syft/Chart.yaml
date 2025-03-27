@@ -1,0 +1,11 @@
+apiVersion: v2
+name: syft-custom
+description: Customized wrapper for Syft chart with schema support
+type: application
+version: 0.1.0
+appVersion: "0.9.6-beta.4"
+
+dependencies:
+  - name: syft
+    version: "0.9.6-beta.4"
+    repository: "https://github.com/OpenMined/PySyft/helm/repo"  # Replace with actual repository URL
