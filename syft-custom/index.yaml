@@ -3,7 +3,7 @@ entries:
   syft:
   - apiVersion: v2
     appVersion: 0.9.6-beta.4
-    created: "2025-03-28T07:14:41.234924-04:00"
+    created: "2025-03-28T08:09:48.598036-04:00"
     description: Perform numpy-like analysis on data that remains in someone elses
       server
     digest: 867b64538c585e7c88d2e6a3519b38952122d36e08d4ade5b4a394710d064550
@@ -12,6 +12,6 @@ entries:
     name: syft
     type: application
     urls:
-    - https://bitsofsteve.com/helm/charts/syft-0.9.6-beta.4.tgz
+    - https://bitsofsteve.com/helm/syft-custom/charts/syft-0.9.6-beta.4.tgz
     version: 0.9.6-beta.4
-generated: "2025-03-28T07:14:41.233819-04:00"
+generated: "2025-03-28T08:09:48.596146-04:00"
