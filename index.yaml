@@ -1,0 +1,17 @@
+apiVersion: v1
+entries:
+  syft:
+  - apiVersion: v2
+    appVersion: 0.9.6-beta.4
+    created: "2025-03-28T08:38:50.368823-04:00"
+    description: Perform numpy-like analysis on data that remains in someone elses
+      server
+    digest: 867b64538c585e7c88d2e6a3519b38952122d36e08d4ade5b4a394710d064550
+    home: https://github.com/OpenMined/PySyft/
+    icon: https://raw.githubusercontent.com/OpenMined/PySyft/dev/docs/img/title_syft_light.png
+    name: syft
+    type: application
+    urls:
+    - syft-0.9.6-beta.4.tgz
+    version: 0.9.6-beta.4
+generated: "2025-03-28T08:38:50.367686-04:00"
