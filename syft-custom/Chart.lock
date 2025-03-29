@@ -1,6 +1,0 @@
-dependencies:
-- name: syft
-  repository: https://openmined.github.io/PySyft/helm/
-  version: 0.9.6-beta.4
-digest: sha256:c5a438ba0feb755bbaec8b68c838f7f5b7a0a9d5d2ca2cf3c6d310a7c55325b7
-generated: "2025-03-28T06:59:55.324058-04:00"
