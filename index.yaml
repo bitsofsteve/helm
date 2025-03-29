@@ -3,10 +3,10 @@ entries:
   syft:
   - apiVersion: v2
     appVersion: 0.9.6-beta.4
-    created: "2025-03-29T05:19:52.405518-04:00"
+    created: "2025-03-29T05:51:08.995244-04:00"
     description: Perform numpy-like analysis on data that remains in someone elses
       server
-    digest: 00451b790c440635f7011dcd0d6119da68340b2a921e05dd10b57bc8bb8b6d0e
+    digest: 5380503cf472fa9539e25022301038ed62dbdf32e86b5385166607badc8835e7
     home: https://github.com/OpenMined/PySyft/
     icon: https://raw.githubusercontent.com/OpenMined/PySyft/dev/docs/img/title_syft_light.png
     name: syft
@@ -14,4 +14,4 @@ entries:
     urls:
     - https://bitsofsteve.com/helm/syft-0.9.6-beta.4.tgz
     version: 0.9.6-beta.4
-generated: "2025-03-29T05:19:52.402783-04:00"
+generated: "2025-03-29T05:51:08.992192-04:00"

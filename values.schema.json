@@ -34,8 +34,8 @@
       "properties": {
         "name": {
           "description": "Server name",
-          "type": ["string", "null"],
-          "default": null
+          "type": "string",
+          "default": ""
         },
         "rootEmail": {
           "description": "Root email",
@@ -56,8 +56,8 @@
         },
         "defaultBucketName": {
           "description": "Default bucket name",
-          "type": ["string", "null"],
-          "default": null
+          "type": "string",
+          "default": ""
         },
         "inMemoryWorkers": {
           "description": "Use in-memory workers",
@@ -82,8 +82,8 @@
           "properties": {
             "defaultRootPassword": {
               "description": "Default root password",
-              "type": ["string", "null"],
-              "default": null,
+              "type": "string",
+              "default": "",
               "x-form": {
                 "value": "{{project.password}}"
               },
