@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: syftbox-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: managed-premium  # Use the built-in AKS storage class
+  resources:
+    requests:
+      storage: 10Gi

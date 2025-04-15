@@ -1,0 +1,46 @@
+# Complete values.yml
+mode: "client"
+deploymentType: "deployment"
+
+image:
+  repository: syftboxregistry.azurecr.io/samples/syftbox
+  tag: latest
+  pullPolicy: IfNotPresent
+
+client:
+  serverUrl: ""
+  email: "stephen@openmined.org"
+  configPath: "/config/syftbox/config.json"
+  config:
+    client_id: "syftbox-client"
+    log_level: "info"
+
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 2Gi
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: "default"
+
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+headlessService:
+  enabled: true
+  port: 8000

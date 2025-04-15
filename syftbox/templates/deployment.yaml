@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syftbox
+  labels:
+    app: syftbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: syftbox
+  template:
+    metadata:
+      labels:
+        app: syftbox
+    spec:
+      containers:
+      - name: syftbox
+        image: syftboxregistry.azurecr.io/syftbox:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        # Probes are defined at the container level
+        # livenessProbe:
+        #   httpGet:
+        #     path: /health
+        #     port: 8080
+        #   initialDelaySeconds: 30
+        #   periodSeconds: 10
+        # readinessProbe:
+        #   httpGet:
+        #     path: /health
+        #     port: 8080
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 5
+        # Volume mounts define where volumes are mounted in the container
+        volumeMounts:
+        - name: syftbox-storage
+          mountPath: /app/data
+      # Volumes are defined at the pod level, not in containers  
+      volumes:
+      - name: syftbox-storage
+        persistentVolumeClaim:
+          claimName: syftbox-pvc
