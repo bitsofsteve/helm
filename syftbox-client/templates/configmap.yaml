@@ -6,8 +6,4 @@ metadata:
     {{- include "syftbox-client.labels" . | nindent 4 }}
 data:
   config.json: |
-    {{- if .Values.client }}
     {{ .Values.client.config | toJson }}
-    {{- else }}
-    {}
-    {{- end }}

@@ -48,8 +48,9 @@ spec:
         volumeMounts:
         - name: syftbox-data
           mountPath: /data
-        - name: syftbox-config
+        - name: syftbox-data
           mountPath: /config/syftbox
+          subPath: config
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
       volumes:

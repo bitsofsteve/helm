@@ -17,17 +17,21 @@ client:
     # port: 8000
   
   # Set client identity
-  email: "client1@openmined.org"
+  email: "client2@openmined.org"
   
   # Client configuration
   config:
-    client_id: "prod-client-1"
+    client_id: "prod-client-2"
     log_level: "info"
     enable_metrics: true
+
+  configPath: "/config/syftbox/config.json"
+
 
 # Configure storage
 persistence:
   enabled: true
+  accessMode: ReadWriteOnce
   size: 5Gi
   # storageClass: "standard"  # Use specific storage class if needed
 
