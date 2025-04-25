@@ -1,6 +1,6 @@
 # Example values for SyftBox client pointing to an external server
 image:
-  repository: syftboxregistry.azurecr.io/samples/syftbox
+  repository: syftboxregistry.azurecr.io/samples/syftbox-client-jupyter
   tag: latest
   pullPolicy: Always
   
@@ -18,10 +18,13 @@ client:
   
   # Set client identity
   email: "client2@openmined.org"
+
+  # Set Jupyter token
+  jupyterToken: "1234567890"
   
   # Client configuration
   config:
-    client_id: "prod-client-2"
+    client_id: "prod-client-1-jupyter"
     log_level: "info"
     enable_metrics: true
 
@@ -47,3 +50,17 @@ resources:
 # Ensure service account is created
 serviceAccount:
   create: false
+
+
+jupyter:
+  enabled: true
+  service:
+    type: ClusterIP
+    port: 8888
+  ingress:
+    enabled: true
+    className: "nginx"  
+    baseDomain: "lab.openmined.org"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+     

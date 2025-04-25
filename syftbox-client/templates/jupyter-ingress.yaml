@@ -1,0 +1,34 @@
+{{- if and .Values.jupyter.enabled .Values.jupyter.ingress.enabled -}}
+{{- $fullName := include "syftbox-client.fullname" . -}}
+{{- $svcPort := .Values.jupyter.service.port -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-jupyter
+  labels:
+    {{- include "syftbox-client.labels" . | nindent 4 }}
+    app.kubernetes.io/component: jupyter
+  {{- with .Values.jupyter.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.jupyter.ingress.className }}
+  ingressClassName: {{ .Values.jupyter.ingress.className }}
+  {{- end }}
+  {{- with .Values.jupyter.ingress.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  rules:
+    - host: "{{ .Release.Namespace }}.{{ .Values.jupyter.ingress.baseDomain }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-jupyter
+                port:
+                  number: {{ $svcPort }}
+{{- end }}

@@ -7,3 +7,21 @@ metadata:
 data:
   config.json: |
     {{ .Values.client.config | toJson }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "syftbox-client.fullname" . }}-startup
+data:
+  startup.sh: |
+    #!/bin/sh
+    uv run jupyter lab --ip=0.0.0.0 --no-browser --allow-root --ServerApp.token="${JUPYTER_TOKEN:-}" --notebook-dir=~/SyftBox/ &
+    jupyter_pid=$!
+    echo "Jupyter started with PID $jupyter_pid"
+    sleep 5
+    if ps -p $jupyter_pid > /dev/null; then
+      echo "Jupyter is running"
+    else
+      echo "Jupyter failed to start"
+    fi
+    exec uv run syftbox client --service

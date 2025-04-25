@@ -1,0 +1,21 @@
+{{- if .Values.jupyter.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "syftbox-client.fullname" . }}-jupyter
+  labels:
+    {{- include "syftbox-client.labels" . | nindent 4 }}
+    app.kubernetes.io/component: jupyter
+spec:
+  type: {{ .Values.jupyter.service.type }}
+  ports:
+    - port: {{ .Values.jupyter.service.port }}
+      targetPort: jupyter
+      protocol: TCP
+      name: http
+      {{- if and (eq .Values.jupyter.service.type "NodePort") .Values.jupyter.service.nodePort }}
+      nodePort: {{ .Values.jupyter.service.nodePort }}
+      {{- end }}
+  selector:
+    {{- include "syftbox-client.selectorLabels" . | nindent 4 }}
+{{- end }}
