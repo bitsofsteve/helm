@@ -21,7 +21,7 @@ spec:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   rules:
-    - host: "{{ .Release.Namespace }}.jupyter.{{ .Values.jupyter.ingress.baseDomain }}"
+    - host: "{{ include "jupyter.hostname" . | quote }}"
       http:
         paths:
           - path: /

@@ -51,6 +51,15 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Create a unique hostname for Jupyter ingress 
+*/}}
+{{- define "jupyter.hostname" -}}
+{{- $namespace := .Release.Namespace -}}
+{{- $randomId := randAlphaNum 8 | lower -}}
+{{- printf "%s-%s.jupyter.%s" $namespace $randomId (.Values.jupyter.ingress.baseDomain) -}}
+{{- end -}}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "syftbox-client.serviceAccountName" -}}
