@@ -3,12 +3,12 @@ entries:
   syftbox-client:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-05-12T09:59:36.883383-04:00"
+    created: "2025-05-12T10:12:09.538409-04:00"
     description: A Helm chart for SyftBox client on Kubernetes
-    digest: 79a5d05b42f901b16d2e2de60b93f91f6339c88ef1af5428b8d42fa0e708433c
+    digest: be3d8ff1b46aae0b33a04d120a9cb7ff7db3cc66eb77f20d9eba36e25d0f6fe1
     name: syftbox-client
     type: application
     urls:
     - https://bitsofsteve.com/helm/syftbox-client/syftbox-client-0.1.0.tgz
     version: 0.1.0
-generated: "2025-05-12T09:59:36.882778-04:00"
+generated: "2025-05-12T10:12:09.535539-04:00"

@@ -21,7 +21,7 @@ spec:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   rules:
-    - host: "{{ include "jupyter.hostname" . | quote }}"
+    - host: {{ include "jupyter.hostname" . | quote }}
       http:
         paths:
           - path: /
