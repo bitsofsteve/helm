@@ -39,6 +39,27 @@
           }
         }
       }
+    },
+        "ingress": {
+          "description": "Jupyter ingress configuration",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enable ingress",
+              "type": "boolean",
+              "default": true
+            },
+            "className": {
+              "description": "Ingress class name",
+              "type": "string",
+              "default": "nginx"
+            },
+            "baseDomain": {
+              "description": "Base domain for namespace-based Jupyter URLs",
+              "type": "string",
+              "default": "lab.your_org.org"
+            }
+          }
+        }
+      }
     }
-  }
-}
